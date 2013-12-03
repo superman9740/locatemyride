@@ -57,6 +57,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
         
         _saveLocationButton.titleLabel.text = @"Location has been saved.";
         _saveLocationButton.enabled = NO;
+        haveSavedLocation = YES;
         
         
     }
@@ -71,6 +72,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
         
         [_takeAPhotoButton setTitle:@"Take a Photo " forState:UIControlStateNormal];
         
+        haveSavedLocation = NO;
         
     }
     
@@ -100,6 +102,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     _currentLocationLabel.text = @"Saved Location";
     
     _saveLocationButton.enabled = NO;
+    haveSavedLocation = YES;
     
 }
 -(IBAction)takeToRide:(id)sender
@@ -254,10 +257,15 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
     _location = [locations objectAtIndex:0];
-    _locationLabel.text = [NSString stringWithFormat:@"lat - %+.6f lon - %+.6f",_location.coordinate.latitude, _location.coordinate.longitude];
+
+    if(!haveSavedLocation)
+    {
+        _locationLabel.text = [NSString stringWithFormat:@"lat - %+.6f lon - %+.6f",_location.coordinate.latitude, _location.coordinate.longitude];
+    }
     
     
-    NSLog(@"Location has been updated:  %@", _locationLabel.text);
+    NSLog(@"Location has been updated:  lat - %+.6f lon - %+.6f",_location.coordinate.latitude, _location.coordinate.longitude);
+          
 
     
     

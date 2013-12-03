@@ -19,6 +19,7 @@
 
     NSString* imagePath;
     UIImagePickerController* pickerController;
+    BOOL haveSavedLocation;
     
     
 }
